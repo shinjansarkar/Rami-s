@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
@@ -57,7 +58,7 @@ export default function AdminLogin() {
             backgroundClip: 'text',
             marginBottom: 8
           }}>
-            Atelier Login
+            Login
           </h1>
           <p style={{ color: '#6b5c7e', fontSize: 13, letterSpacing: '0.05em' }}>
             Secure access for Romi&apos;s administration.
@@ -87,18 +88,50 @@ export default function AdminLogin() {
             <label style={{ display: 'block', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#7c1fa2', marginBottom: 8 }}>
               Password
             </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{
-                width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid #e9d5ff',
-                padding: '8px 0', fontSize: 14, color: '#1a0030', outline: 'none', transition: 'border-color 0.3s'
-              }}
-              onFocus={e => e.currentTarget.style.borderBottomColor = '#7c1fa2'}
-              onBlur={e => e.currentTarget.style.borderBottomColor = '#e9d5ff'}
-            />
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{
+                  width: '100%', background: 'transparent', border: 'none', borderBottom: '1px solid #e9d5ff',
+                  padding: '8px 32px 8px 0', fontSize: 14, color: '#1a0030', outline: 'none', transition: 'border-color 0.3s'
+                }}
+                onFocus={e => e.currentTarget.style.borderBottomColor = '#7c1fa2'}
+                onBlur={e => e.currentTarget.style.borderBottomColor = '#e9d5ff'}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 24,
+                  height: 24,
+                  position: 'absolute',
+                  right: 0,
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  border: 'none',
+                  background: 'transparent',
+                  padding: 0,
+                  cursor: 'pointer',
+                  color: '#7c1fa2'
+                }}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                title={showPassword ? 'Hide password' : 'Show password'}
+              >
+                <span
+                  key={showPassword ? 'open' : 'closed'}
+                  className="material-symbols-outlined"
+                  style={{ fontSize: 18, lineHeight: 1, animation: 'eyeBlink 0.22s ease' }}
+                >
+                  {showPassword ? 'visibility' : 'visibility_off'}
+                </span>
+              </button>
+            </div>
           </div>
 
           {error && (
@@ -121,10 +154,17 @@ export default function AdminLogin() {
             onMouseEnter={e => { if(!loading) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(124,31,162,0.3)'; } }}
             onMouseLeave={e => { if(!loading) { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; } }}
           >
-            {loading ? 'Authenticating...' : 'Enter Atelier'}
+            {loading ? 'Authenticating...' : 'Login'}
           </button>
         </form>
       </div>
+      <style>{`
+        @keyframes eyeBlink {
+          0% { transform: scaleY(1); opacity: 1; }
+          45% { transform: scaleY(0.15); opacity: 0.9; }
+          100% { transform: scaleY(1); opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }
