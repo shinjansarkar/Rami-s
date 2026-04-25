@@ -116,15 +116,35 @@ export default function AdminPage() {
     setSubmitting(false);
   };
 
-  const deleteItem = async (id, name) => {
+  const getStoragePathFromPublicUrl = (publicUrl) => {
+    if (!publicUrl) return null;
+    const marker = '/storage/v1/object/public/sarees/';
+    const index = publicUrl.indexOf(marker);
+    if (index === -1) return null;
+    const pathWithQuery = publicUrl.slice(index + marker.length);
+    return decodeURIComponent(pathWithQuery.split('?')[0]);
+  };
+
+  const deleteItem = async (id, name, imageUrl) => {
     if (!confirm(`Remove "${name}" from inventory?`)) return;
     try {
       const { supabase } = await import('@/lib/supabase');
-      await supabase.from('sarees').delete().eq('id', id);
+
+      const filePath = getStoragePathFromPublicUrl(imageUrl);
+      if (filePath) {
+        const { error: storageError } = await supabase.storage.from('sarees').remove([filePath]);
+        if (storageError && !storageError.message?.toLowerCase().includes('not found')) {
+          throw new Error(storageError.message);
+        }
+      }
+
+      const { error: deleteError } = await supabase.from('sarees').delete().eq('id', id);
+      if (deleteError) throw new Error(deleteError.message);
+
       showToast(`"${name}" removed`);
       fetchInventory();
     } catch (e) {
-      showToast('Delete failed', 'error');
+      showToast(e.message || 'Delete failed', 'error');
     }
   };
 
@@ -416,7 +436,7 @@ export default function AdminPage() {
                           <h4 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 600, color: '#1a0030', lineHeight: 1.2, marginBottom: 8 }}>{item.name}</h4>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto', paddingTop: 12, borderTop: '1px solid rgba(124,31,162,0.05)' }}>
                             <p style={{ fontSize: 14, fontWeight: 700, color: '#be185d' }}>₹{Number(item.price).toLocaleString('en-IN')}</p>
-                            <button onClick={() => deleteItem(item.id, item.name)}
+                            <button onClick={() => deleteItem(item.id, item.name, item.image_url)}
                               style={{ background: 'none', border: 'none', color: '#6b5c7e', fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer', transition: 'color 0.2s' }}
                               onMouseEnter={e => e.currentTarget.style.color = '#be185d'} onMouseLeave={e => e.currentTarget.style.color = '#6b5c7e'}>
                               Remove
