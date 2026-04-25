@@ -83,7 +83,7 @@ export default function HomePage() {
         }}>
           <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
             <Image
-              src="https://images.unsplash.com/photo-1616756141603-6d37d5cde2a2?w=2000&auto=format&fit=crop&q=80"
+              src="hero.avif"
               alt="Elegant woman wearing a beautiful red saree"
               fill
               style={{ objectFit: 'cover', objectPosition: 'center', transform: 'scale(1.04)' }}
@@ -203,10 +203,10 @@ export default function HomePage() {
             <div className="responsive-split">
               <ScrollReveal direction="right" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div className="hover-zoom" style={{ aspectRatio: '3/4', overflow: 'hidden', position: 'relative', borderRadius: 2 }}>
-                  <Image src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeq2-GmUJCx8Yd1-BMmr4KEp2hd_m9go35cdnCcJQvdx0BYzwBFRs5KzVvJv-xv2kQC0sBfOHgU-zoTbG2BvcltJ6ILv3Cb8zBgxl8VV8v4JwTDxv9yXQ-3BHF0MLUYcw8TcoIz5nBUfxMLKZn1PAA1P9RN1vWyAZW329j8cuTskAVkFQp_sUPEvinj1pY3oAP9zrzL-7MoBcDg5YyOJlO3_pftn9gsHAF3QXPwjCJApmuRvUEuqOzoTP_zcl-8iikg_6pXWNoUw" alt="Handwoven Jamdani saree" fill style={{ objectFit: 'cover', transition: 'transform 0.8s ease' }} unoptimized />
+                  <Image src="saree2white.png" alt="Handwoven Jamdani saree" fill style={{ objectFit: 'cover', transition: 'transform 0.8s ease' }} unoptimized />
                 </div>
                 <div className="hover-zoom" style={{ aspectRatio: '3/4', overflow: 'hidden', position: 'relative', borderRadius: 2, marginTop: 48 }}>
-                  <Image src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVo96L0cfKCCGlANSjURt841ZhUPjquKlyRpvg1cyeTatZBuNmJXJ_KxrIfPAh2GnOWaF4uXhslP1NoV-fDUO18h6OKCYENNrWOeETbzEwlerYqa0NIlOyz3e5xtyZSICsHTvrRxlNccJAqdYGXQKbpQjXEVUJGK66fSQnrOqKH4fnz_SZh1T_ylZUbMAVuHNVmzH3zHepWdmPTvlySpvA9_rMncRDzpe_lF20Mzf7f7Y4vS5C-A31prEWnSPefk0vjCdnkycILw" alt="Vibrant silk saree" fill style={{ objectFit: 'cover', transition: 'transform 0.8s ease' }} unoptimized />
+                  <Image src="saree1.png" alt="Vibrant silk saree" fill style={{ objectFit: 'cover', transition: 'transform 0.8s ease' }} unoptimized />
                 </div>
               </ScrollReveal>
               <ScrollReveal direction="left">
