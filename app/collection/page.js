@@ -2,56 +2,31 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
-import ProductCard from '@/components/ProductCard';
 import CollectionGrid from '@/components/CollectionGrid';
 import ScrollReveal from '@/components/ScrollReveal';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata = {
   title: "Collection | Romi's Saree",
   description: "Browse Romi's hand-woven heritage sarees. Discover the meticulous craftsmanship of Bengal's finest weavers.",
 };
 
-const sampleProducts = [
-  {
-    id: 1, name: 'Blue Silk Saree', category: 'Silk', price: 14500,
-    description: 'Traditional motifs woven with midnight blue silk and shimmering gold zari thread.',
-    image_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDV0k1_lB0bUaP4MBIGtrRODkbxTW3lchAmwEW-XQdOZ6WWMFBruGABkUC_MTVJ3CegOsRivskd1VLmLz60dK63EhFlfGxQz8dJOZbmtidkHfDUTPxRcUfPbDPNLQwDe5fkc9fwY1qXhIqPL8E18fMZNP8V70hS9_VRxPPbC1FtC86El8HuCb0coPuEfVubebXMHm5flpe8Kgx2k6nJfJIIDSbnShiGxof2tnB0M_fgMWNxyYa6ZQ1Ig4ABWmZfUVDW0ozFKNraHA',
-    accent: '#1d4ed8',
-  },
-  {
-    id: 2, name: 'Crimson Heritage', category: 'Baluchari', price: 18200,
-    description: 'A classic Baluchari masterpiece depicting timeless folklore in every weave.',
-    image_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCTjG5NLKJnwb9yKE6yPF3Cml7NdHxj0ocb8kCxMeBfudhFMWBFwg5GlZ6lScikumdO4fXmnlAk2Lqqn1Iqj9XkdkH2SdPN-N9etgVGwryKyHSqHUPJUWibh4hWJqilXacSqywNQZSQZVDnA6lrJP9qpXxc1vsZC-yeDrZzpA49q5ysWy3uzuTne7VQlHk4KQ8HJPw5RgTmHjn_QFLnJ2yWIlfZsU1B4laHl4ZELBM4Rmzg2z6lRjzIEdV2r8IDTR1GxwK9OxAjnA',
-    accent: '#be185d',
-  },
-  {
-    id: 3, name: 'Ivory Muslin', category: 'Cotton', price: 22000,
-    description: "The legendary 'woven air' of Bengal, lightweight and exceptionally refined.",
-    image_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCpS6bFSFs06C7TQvFSQeOGBl_JT95gzcVwwA8-AfdHLAXTJCtDrK-joGBQ3FkwRsEIgjJd6isN11UE7xyHEV41r5lfXleaY5t0pkthQx9iKTM-nFC-YXb8ThKQKVEFWt-tFiw72lzVCGD7fhiTAqTsvzGwO1eBSBwQGwQUxNyw538U4kX85D83nKpUbGqElpmOl05Hiybyh1NeVE8jomTW7IW58Gad03P4eHiwBko6gp3drmC-3h5g0HTkxJet459HOwXGIHnXOg',
-    accent: '#059669',
-  },
-  {
-    id: 4, name: 'Emerald Banarasi', category: 'Silk', price: 25800,
-    description: 'Opulent silk with concentrated gold work on the pallu, perfect for festivities.',
-    image_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCOJ2CE3HuBya08ecbAAUR5raQl3Hkb2ehhzOJ-1fOLAaLkoHgOjRf_54AmBAzNwyigFn17jxgy_x5XAiDfQrp-gyM13ZeROOCEhUCyInvbdRfZP2nBKz6snOf5wPWp8JCStexdbTe2fDMMDQp2nYZXNu8vUjquaM9MbGlpeBOJu_6SrtKVLgO1v7fvdEt98Gcn5IJr5O3jITD2CSgVywVzBFp7_CYxNxPn924u2hp8aEYMZmBFVmeL8c0b_VnLHHmSfbAIt69vYA',
-    accent: '#7c1fa2',
-  },
-];
-
 async function getProducts() {
   try {
     if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('your-project')) {
-      return sampleProducts;
+      return [];
     }
     const { supabase } = await import('@/lib/supabase');
     const { data, error } = await supabase
       .from('sarees')
       .select('*')
       .order('created_at', { ascending: false });
-    if (error || !data?.length) return sampleProducts;
-    return data.map((p, i) => ({ ...p, accent: sampleProducts[i % sampleProducts.length].accent }));
+    if (error || !data?.length) return [];
+    return data.map((p) => ({ ...p, accent: p.accent || '#7c1fa2' }));
   } catch {
-    return sampleProducts;
+    return [];
   }
 }
 
