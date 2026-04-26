@@ -56,7 +56,7 @@ export default function HomePage() {
     "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuA2BWsi_c7CqNkS6Epd98Yg1I44oraVV_vY3mifJYQ_f836M0xEKcmqPznKdwD40YR0YAA8YNjzsTBBTTWXnJ97_mZ2Ucpnc57-zvr6SPE9NeDa1EFJawid-ZFgQr4dwXgf6PaRq1b8h5i1s5Y4eT8kUXTHCUuAoPSPQiZRdN71feYaawYdSufuWxAzHib9JWapUhVz_f99U-iFdxgjhogb5Im8jNBltqydJf5nPEji5fmNR0_PleC-bVAPG4YfQ0Qvbdja9FoFKg",
     "description": "Authentic Bengali sarees curated with love. সাজিয়েছি এক নতুন পসরা",
     "url": "https://romissaree.com",
-    "telephone": "+919830012345",
+    "telephone": "+916290725060",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "IN"
@@ -138,7 +138,7 @@ export default function HomePage() {
                   View Collection
                   <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
                 </Link>
-                <Link href="https://wa.me/919830012345" className="btn-outline-light">
+                <Link href="https://wa.me/916290725060" className="btn-outline-light">
                   <span className="material-symbols-outlined" style={{ fontSize: 16, fontVariationSettings: "'FILL' 1" }}>chat</span>
                   WhatsApp Romi
                 </Link>
@@ -330,7 +330,7 @@ export default function HomePage() {
                 Explore Collection
                 <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
               </Link>
-              <Link href="https://wa.me/919830012345" className="btn-outline-light">
+              <Link href="https://wa.me/916290725060" className="btn-outline-light">
                 <span className="material-symbols-outlined" style={{ fontSize: 16, fontVariationSettings: "'FILL' 1" }}>chat</span>
                 Chat on WhatsApp
               </Link>
@@ -341,7 +341,7 @@ export default function HomePage() {
       </main>
       <Footer />
 
-      <Link href="https://wa.me/919830012345" className="whatsapp-float-btn">
+      <Link href="https://wa.me/916290725060" className="whatsapp-float-btn">
         <span className="material-symbols-outlined" style={{ color: '#fff', fontSize: 26, fontVariationSettings: "'FILL' 1" }}>chat</span>
       </Link>
     </>

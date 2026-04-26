@@ -63,7 +63,7 @@ export default function ProductCard({ product }) {
           </p>
         )}
         <Link
-          href={`https://wa.me/919830012345?text=Hi! I'm interested in the ${product.name} (₹${price}). ${product.image_url ? `Photo: ${product.image_url}` : ''}`}
+          href={`https://wa.me/916290725060?text=Hi! I'm interested in the ${product.name} (₹${price}). ${product.image_url ? `Photo: ${product.image_url}` : ''}`}
           style={{
             marginTop: 'auto',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,

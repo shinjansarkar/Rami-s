@@ -137,7 +137,7 @@ export default async function CollectionPage() {
       </main>
       <Footer />
       
-      <Link href="https://wa.me/919830012345" className="whatsapp-float-btn">
+      <Link href="https://wa.me/916290725060" className="whatsapp-float-btn">
         <span className="material-symbols-outlined" style={{ color: '#fff', fontSize: 26, fontVariationSettings: "'FILL' 1" }}>chat</span>
       </Link>
     </>

@@ -70,7 +70,7 @@ export default function ContactPage() {
                 </div>
 
                 <Link
-                  href="https://wa.me/919830012345"
+                  href="https://wa.me/916290725060"
                   className="whatsapp-btn"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 16,

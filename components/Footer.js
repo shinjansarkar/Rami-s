@@ -71,7 +71,7 @@ export default function Footer() {
               View on Map
             </Link>
             <br/>
-            <Link href="https://wa.me/919830012345" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#4ade80', textDecoration: 'none' }}>
+            <Link href="https://wa.me/916290725060" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#4ade80', textDecoration: 'none' }}>
               <span className="material-symbols-outlined" style={{ fontSize: 16, fontVariationSettings: "'FILL' 1" }}>chat</span>
               WhatsApp Us
             </Link>
