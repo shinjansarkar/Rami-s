@@ -18,6 +18,37 @@ export default function AdminPage() {
   const [inventory, setInventory] = useState([]);
   const [loadingInventory, setLoadingInventory] = useState(true);
   const fileInputRef = useRef();
+  const [editingId, setEditingId] = useState(null);
+
+  const startEdit = (item) => {
+    setEditingId(item.id);
+    setForm({
+      name: item.name,
+      price: item.price.toString(),
+      category: item.category,
+      description: item.description || '',
+      stock_status: item.stock_status,
+      stock_count: item.stock_count ? item.stock_count.toString() : '',
+    });
+    setImagePreview(item.image_url);
+    setImageFile(null);
+    if (typeof document !== 'undefined') {
+      const fileInput = document.getElementById('saree-image-input');
+      if (fileInput) fileInput.value = '';
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setForm({ name: '', price: '', category: 'Silk', description: '', stock_status: 'In Stock', stock_count: '' });
+    setImageFile(null);
+    setImagePreview(null);
+    if (typeof document !== 'undefined') {
+      const fileInput = document.getElementById('saree-image-input');
+      if (fileInput) fileInput.value = '';
+    }
+  };
+
 
   // Stats
   const stats = [
@@ -68,7 +99,7 @@ export default function AdminPage() {
     setSubmitting(true);
     try {
       const { supabase } = await import('@/lib/supabase');
-      let image_url = null;
+      let image_url = imagePreview;
 
       // 1. Upload image if provided
       if (imageFile) {
@@ -92,29 +123,60 @@ export default function AdminPage() {
         image_url = urlData.publicUrl;
       }
 
-      // 2. Insert saree record
-      const { error: insertError } = await supabase.from('sarees').insert([{
-        name: form.name,
-        category: form.category,
-        price: parseFloat(form.price),
-        description: form.description,
-        image_url,
-        stock_status: form.stock_status,
-        stock_count: form.stock_count ? parseInt(form.stock_count) : null,
-      }]);
+      // Deletion of old image if needed
+      if (editingId) {
+        const oldItem = inventory.find(item => item.id === editingId);
+        if (oldItem && oldItem.image_url) {
+          const oldPath = getStoragePathFromPublicUrl(oldItem.image_url);
+          if (oldPath) {
+            if (imageFile || !imagePreview) {
+              await supabase.storage.from('sarees').remove([oldPath]);
+            }
+          }
+        }
+      }
 
-      if (insertError) throw new Error(insertError.message);
+      if (editingId) {
+        // 2. Update saree record
+        const { error: updateError } = await supabase.from('sarees').update({
+          name: form.name,
+          category: form.category,
+          price: parseFloat(form.price),
+          description: form.description,
+          image_url,
+          stock_status: form.stock_status,
+          stock_count: form.stock_count ? parseInt(form.stock_count) : null,
+        }).eq('id', editingId);
 
-      showToast(`"${form.name}" added to inventory!`);
+        if (updateError) throw new Error(updateError.message);
+        showToast(`"${form.name}" updated successfully!`);
+      } else {
+        // 2. Insert saree record
+        const { error: insertError } = await supabase.from('sarees').insert([{
+          name: form.name,
+          category: form.category,
+          price: parseFloat(form.price),
+          description: form.description,
+          image_url,
+          stock_status: form.stock_status,
+          stock_count: form.stock_count ? parseInt(form.stock_count) : null,
+        }]);
+
+        if (insertError) throw new Error(insertError.message);
+        showToast(`"${form.name}" added to inventory!`);
+      }
+
       setForm({ name: '', price: '', category: 'Silk', description: '', stock_status: 'In Stock', stock_count: '' });
       setImageFile(null);
       setImagePreview(null);
+      setEditingId(null);
       fetchInventory();
     } catch (err) {
       showToast(err.message, 'error');
     }
     setSubmitting(false);
   };
+
 
   const getStoragePathFromPublicUrl = (publicUrl) => {
     if (!publicUrl) return null;
@@ -271,7 +333,8 @@ export default function AdminPage() {
 
               {/* ─── ADD FORM ─── */}
               <div style={{ background: '#fff', padding: 32, borderRadius: 8, border: '1px solid rgba(124,31,162,0.08)', boxShadow: '0 4px 30px rgba(0,0,0,0.03)', position: 'sticky', top: 140 }}>
-                <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 24, fontWeight: 600, color: '#1a0030', marginBottom: 24 }}>Add Heritage Piece</h3>
+                <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 24, fontWeight: 600, color: '#1a0030', marginBottom: 24 }}>{editingId ? 'Edit Heritage Piece' : 'Add Heritage Piece'}</h3>
+
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
 
                   <div>
@@ -362,24 +425,42 @@ export default function AdminPage() {
                     <input id="saree-image-input" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageChange} />
                   </div>
 
-                  <button type="submit" disabled={submitting}
-                    style={{
-                      background: 'linear-gradient(135deg, #7c1fa2 0%, #be185d 100%)',
-                      color: '#fff', padding: '16px', borderRadius: 6,
-                      fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase',
-                      border: 'none', cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.7 : 1,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'transform 0.3s, box-shadow 0.3s',
-                      marginTop: 8
-                    }}
-                    onMouseEnter={e => { if(!submitting) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(124,31,162,0.3)'; } }}
-                    onMouseLeave={e => { if(!submitting) { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; } }}
-                  >
-                    {submitting ? (
-                      <><span className="material-symbols-outlined" style={{ fontSize: 16, animation: 'spin 1s linear infinite' }}>refresh</span> Saving...</>
-                    ) : (
-                      <>Register Piece <span className="material-symbols-outlined" style={{ fontSize: 16 }}>check_circle</span></>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 8 }}>
+                    <button type="submit" disabled={submitting}
+                      style={{
+                        background: 'linear-gradient(135deg, #7c1fa2 0%, #be185d 100%)',
+                        color: '#fff', padding: '16px', borderRadius: 6,
+                        fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase',
+                        border: 'none', cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.7 : 1,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'transform 0.3s, box-shadow 0.3s'
+                      }}
+                      onMouseEnter={e => { if(!submitting) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(124,31,162,0.3)'; } }}
+                      onMouseLeave={e => { if(!submitting) { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; } }}
+                    >
+                      {submitting ? (
+                        <><span className="material-symbols-outlined" style={{ fontSize: 16, animation: 'spin 1s linear infinite' }}>refresh</span> {editingId ? 'Updating...' : 'Saving...'}</>
+                      ) : (
+                        <>{editingId ? 'Update Piece' : 'Register Piece'} <span className="material-symbols-outlined" style={{ fontSize: 16 }}>check_circle</span></>
+                      )}
+                    </button>
+
+                    {editingId && (
+                      <button type="button" onClick={cancelEdit} disabled={submitting}
+                        style={{
+                          background: 'none',
+                          color: '#6b5c7e', padding: '12px', borderRadius: 6,
+                          fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase',
+                          border: '1px solid #e9d5ff', cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.7 : 1,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'all 0.3s'
+                        }}
+                        onMouseEnter={e => { if(!submitting) { e.currentTarget.style.background = '#faf7ff'; e.currentTarget.style.borderColor = '#6b5c7e'; } }}
+                        onMouseLeave={e => { if(!submitting) { e.currentTarget.style.background = 'none'; e.currentTarget.style.borderColor = '#e9d5ff'; } }}
+                      >
+                        Cancel Edit
+                      </button>
                     )}
-                  </button>
+                  </div>
+
                 </form>
               </div>
 
@@ -434,14 +515,20 @@ export default function AdminPage() {
                         <div style={{ padding: 16, display: 'flex', flexDirection: 'column', flex: 1 }}>
                           <p style={{ fontSize: 9, fontWeight: 700, color: '#7c1fa2', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 4 }}>{item.category}</p>
                           <h4 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 18, fontWeight: 600, color: '#1a0030', lineHeight: 1.2, marginBottom: 8 }}>{item.name}</h4>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto', paddingTop: 12, borderTop: '1px solid rgba(124,31,162,0.05)' }}>
-                            <p style={{ fontSize: 14, fontWeight: 700, color: '#be185d' }}>₹{Number(item.price).toLocaleString('en-IN')}</p>
+                          <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', marginTop: 'auto', paddingTop: 12, borderTop: '1px solid rgba(124,31,162,0.05)' }}>
+                            <p style={{ fontSize: 14, fontWeight: 700, color: '#be185d', flex: 1 }}>₹{Number(item.price).toLocaleString('en-IN')}</p>
+                            <button onClick={() => startEdit(item)}
+                              style={{ background: 'none', border: 'none', color: '#7c1fa2', fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer', transition: 'color 0.2s' }}
+                              onMouseEnter={e => e.currentTarget.style.color = '#be185d'} onMouseLeave={e => e.currentTarget.style.color = '#7c1fa2'}>
+                              Edit
+                            </button>
                             <button onClick={() => deleteItem(item.id, item.name, item.image_url)}
                               style={{ background: 'none', border: 'none', color: '#6b5c7e', fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', cursor: 'pointer', transition: 'color 0.2s' }}
                               onMouseEnter={e => e.currentTarget.style.color = '#be185d'} onMouseLeave={e => e.currentTarget.style.color = '#6b5c7e'}>
                               Remove
                             </button>
                           </div>
+
                         </div>
                       </div>
                     ))}
