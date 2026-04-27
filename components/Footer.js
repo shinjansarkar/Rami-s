@@ -63,10 +63,10 @@ export default function Footer() {
           <div>
             <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 10, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#f9a8d4', marginBottom: 20 }}>Connect</div>
             <p style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7, marginBottom: 12 }}>
-              12 Heritage Lane, Artistry District<br />
-              Kolkata, West Bengal 700019
+              7/A Subinoy, Pratap Ghosh Sarani, GIP Colony<br />
+              Ganendra Kanan, Jagacha, Howrah, West Bengal 711112
             </p>
-            <Link href="https://maps.app.goo.gl/vZCiAF1UC6T8rPH18" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#f9a8d4', textDecoration: 'none', marginBottom: 24, paddingBottom: 4, borderBottom: '1px solid rgba(249,168,212,0.3)', transition: 'border-color 0.3s' }}>
+            <Link href="https://share.google/UaaSV3oOiRQ43lAQf" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#f9a8d4', textDecoration: 'none', marginBottom: 24, paddingBottom: 4, borderBottom: '1px solid rgba(249,168,212,0.3)', transition: 'border-color 0.3s' }}>
               <span className="material-symbols-outlined" style={{ fontSize: 14 }}>location_on</span>
               View on Map
             </Link>

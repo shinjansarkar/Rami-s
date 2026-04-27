@@ -6,7 +6,7 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 export const metadata = {
   title: "Contact | Romi's Saree",
-  description: "Visit Romi's atelier in Kolkata or reach us on WhatsApp for personal styling assistance.",
+  description: "Visit Romi's atelier in Howrah or reach us on WhatsApp for personal styling assistance.",
 };
 
 export default function ContactPage() {
@@ -53,7 +53,7 @@ export default function ContactPage() {
               <ScrollReveal direction="right" delay={0.4}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 32, marginBottom: 48 }}>
                   {[
-                    { icon: 'location_on', title: 'Our Address', text: '12 Heritage Lane, Artistry District\nKolkata, West Bengal 700019' },
+                    { icon: 'location_on', title: 'Our Address', text: '7/A Subinoy, Pratap Ghosh Sarani, GIP Colony\nGanendra Kanan, Jagacha, Howrah, West Bengal 711112' },
                     { icon: 'call', title: 'Call Us', text: '+91 98300 12345' },
                     { icon: 'schedule', title: 'Working Hours', text: 'Monday – Saturday: 10am – 7pm\nSunday: 11am – 5pm' },
                   ].map(({ icon, title, text }) => (
@@ -98,7 +98,7 @@ export default function ContactPage() {
                     loading="lazy"
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
-                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Kolkata+(Romi's%20Saree)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=7%2FA%20Subinoy%2C%20Pratap%20Ghosh%20Sarani%2C%20GIP%20Colony%2C%20Ganendra%20Kanan%2C%20Jagacha%2C%20Howrah%2C%20West%20Bengal%20711112+(Romi's%20Saree)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                   />
                   {/* Map Interactive Overlay */}
                   <div style={{ position: 'absolute', bottom: 32, left: 32, right: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', pointerEvents: 'none' }}>
@@ -106,7 +106,7 @@ export default function ContactPage() {
                       <div style={{ color: '#1a0030', fontFamily: 'Outfit, sans-serif', fontWeight: 700, letterSpacing: '0.05em', marginBottom: 2, fontSize: 16 }}>Romi&apos;s Saree</div>
                       <div style={{ color: '#6b5c7e', fontSize: 12, fontFamily: 'Outfit, sans-serif' }}>Open in Maps app</div>
                     </div>
-                    <Link href="https://maps.app.goo.gl/vZCiAF1UC6T8rPH18" target="_blank" rel="noopener noreferrer" className="hover-map-btn" style={{ background: '#be185d', width: 56, height: 56, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', textDecoration: 'none', boxShadow: '0 12px 24px rgba(190,24,93,0.3)', pointerEvents: 'auto', transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
+                    <Link href="https://share.google/UaaSV3oOiRQ43lAQf" target="_blank" rel="noopener noreferrer" className="hover-map-btn" style={{ background: '#be185d', width: 56, height: 56, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', textDecoration: 'none', boxShadow: '0 12px 24px rgba(190,24,93,0.3)', pointerEvents: 'auto', transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
                       <span className="material-symbols-outlined" style={{ fontSize: 24, fontVariationSettings: "'FILL' 1" }}>directions</span>
                     </Link>
                   </div>

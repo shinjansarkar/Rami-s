@@ -49,6 +49,9 @@ const features = [
 ];
 
 export default function HomePage() {
+  const romisMapUrl = "https://www.google.com/maps/place/Romi's/@22.5899285,88.283624,805m/data=!3m1!1e3!4m6!3m5!1s0x3a0279a59004036b:0x290a789b12005b33!8m2!3d22.5899285!4d88.2883876!16s%2Fg%2F11trkmpnjv?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D";
+  const romisMapEmbedUrl = 'https://maps.google.com/maps?cid=2957308712739429171&hl=en&output=embed';
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Store",
@@ -59,6 +62,10 @@ export default function HomePage() {
     "telephone": "+916290725060",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "7/A Subinoy, Pratap Ghosh Sarani, GIP Colony, Ganendra Kanan, Jagacha",
+      "addressLocality": "Howrah",
+      "addressRegion": "West Bengal",
+      "postalCode": "711112",
       "addressCountry": "IN"
     }
   };
@@ -269,7 +276,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, color: '#1a0030', marginBottom: 4, fontSize: 16 }}>Romi&apos;s Saree Boutique</div>
-                      <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, color: '#6b5c7e', lineHeight: 1.6 }}>12 Heritage Lane, Artistry District<br />Kolkata, West Bengal 700019</div>
+                      <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, color: '#6b5c7e', lineHeight: 1.6 }}>7/A Subinoy, Pratap Ghosh Sarani, GIP Colony<br />Ganendra Kanan, Jagacha, Howrah, West Bengal 711112</div>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
@@ -279,7 +286,7 @@ export default function HomePage() {
                     <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, color: '#6b5c7e', fontWeight: 500 }}>Open Daily: 11:00 AM – 8:00 PM</div>
                   </div>
                 </div>
-                <Link href="https://maps.app.goo.gl/vZCiAF1UC6T8rPH18" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <Link href={romisMapUrl} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                   <span className="material-symbols-outlined" style={{ fontSize: 18 }}>directions</span>
                   Get Directions
                 </Link>
@@ -293,16 +300,24 @@ export default function HomePage() {
                   loading="lazy"
                   allowFullScreen
                   referrerPolicy="no-referrer-when-downgrade"
-                  src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Kolkata+(Romi's%20Saree)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                  src={romisMapEmbedUrl}
+                />
+
+                <Link
+                  href={romisMapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Romi's Saree in Google Maps"
+                  style={{ position: 'absolute', inset: 0, zIndex: 1 }}
                 />
 
                 {/* Map Interactive Overlay */}
-                <div style={{ position: 'absolute', bottom: 32, left: 32, right: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', pointerEvents: 'none' }}>
+                <div style={{ position: 'absolute', bottom: 32, left: 32, right: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', pointerEvents: 'none', zIndex: 2 }}>
                   <div style={{ padding: '12px 20px', background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(8px)', borderRadius: 8, boxShadow: '0 8px 32px rgba(0,0,0,0.1)', pointerEvents: 'auto' }}>
                     <div style={{ color: '#1a0030', fontFamily: 'Outfit, sans-serif', fontWeight: 700, letterSpacing: '0.05em', marginBottom: 2, fontSize: 16 }}>Romi&apos;s Saree</div>
                     <div style={{ color: '#6b5c7e', fontSize: 12, fontFamily: 'Outfit, sans-serif' }}>Open in Maps app</div>
                   </div>
-                  <Link href="https://maps.app.goo.gl/vZCiAF1UC6T8rPH18" target="_blank" rel="noopener noreferrer" className="hover-map-btn" style={{ background: '#be185d', width: 56, height: 56, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', textDecoration: 'none', boxShadow: '0 12px 24px rgba(190,24,93,0.3)', pointerEvents: 'auto' }}>
+                  <Link href={romisMapUrl} target="_blank" rel="noopener noreferrer" className="hover-map-btn" style={{ background: '#be185d', width: 56, height: 56, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', textDecoration: 'none', boxShadow: '0 12px 24px rgba(190,24,93,0.3)', pointerEvents: 'auto' }}>
                     <span className="material-symbols-outlined" style={{ fontSize: 24, fontVariationSettings: "'FILL' 1" }}>directions</span>
                   </Link>
                 </div>
